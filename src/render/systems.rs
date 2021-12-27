@@ -4,6 +4,7 @@ use crate::render::ColliderDebugRender;
 use bevy::prelude::*;
 use bevy::render::mesh::{Indices, VertexAttributeValues};
 use rapier::geometry::ShapeType;
+use wgpu::PrimitiveTopology;
 
 #[derive(Debug, Hash, PartialEq, Eq, Clone, SystemLabel)]
 pub enum RenderSystems {
@@ -80,7 +81,7 @@ fn generate_collider_mesh(co_shape: &ColliderShape) -> Option<(Mesh, Vec3)> {
         }),
         #[cfg(feature = "dim2")]
         ShapeType::TriMesh => {
-            let mut mesh = Mesh::new(bevy::render::pipeline::PrimitiveTopology::TriangleList);
+            let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
             let trimesh = co_shape.as_trimesh().unwrap();
             mesh.set_attribute(
                 Mesh::ATTRIBUTE_POSITION,
@@ -104,7 +105,7 @@ fn generate_collider_mesh(co_shape: &ColliderShape) -> Option<(Mesh, Vec3)> {
         }
         #[cfg(feature = "dim3")]
         ShapeType::TriMesh => {
-            let mut mesh = Mesh::new(bevy::render::pipeline::PrimitiveTopology::TriangleList);
+            let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
             let trimesh = co_shape.as_trimesh().unwrap();
             mesh.set_attribute(
                 Mesh::ATTRIBUTE_POSITION,
